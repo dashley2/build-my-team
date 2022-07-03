@@ -1,3 +1,5 @@
+const generatePage = require('./src/page-template');
+
 const inquirer = require('inquirer');
 const fs = require('fs');
 
@@ -175,3 +177,66 @@ const addIntern = [
         }
     }
 ]
+// type
+const employeeType = [
+    {
+        type: 'list',
+        name: 'type',
+        message: 'What type of team member would you like to add?',
+        choices: ['Engineer', 'Intern', 'I do not want to add anymore team members']
+    }
+]
+
+const promptEngineer = () => {
+    inquirer.prompt(addEngineer)
+        .then(answers => {
+            const engineer = new Engineer(answers.name, answers.id, answers.email, answers.github);
+            teamArray.push(engineer);
+
+            promptType();
+        })
+};
+
+const promptIntern = () => {
+    inquirer.prompt(addIntern)
+        .then(answers => {
+            const intern = new Intern(answers.name, answers.id, answers.email, answers.school);
+            teamArray.push(intern);
+
+            promptType();
+        })
+
+};
+
+const promptType = () => {
+    inquirer.prompt(employeeType)
+        .then(answer => {
+            if(answer.type === 'Engineer') {
+                promptEngineer();
+            } else if(answer.type === 'Intern') {
+                promptIntern();
+            } else {
+                writeFile(generatePage(teamArray));
+            }
+        })
+}
+const promptUser = () => {
+    inquirer
+        .prompt(addManager)
+            .then(answers => {
+                const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber);
+                teamArray.push(manager);
+
+                promptType();
+            })
+};
+
+const writeFile = html => {
+    fs.writeFile('./dist/team.html', html, (err) => {
+        if (err) throw new Error(err);
+
+        console.log('Your team profile has been created! Check out team.html in the dist/ folder!');
+    });
+};
+
+promptUser();
