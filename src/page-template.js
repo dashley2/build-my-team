@@ -43,7 +43,7 @@ generateIntern = intern => {
         <div class="card h-100">
             <div class="card-header">
                 <h3>${intern.name}</h3>
-                <h4>Intern</h4><i class="fa-solid fa-graduation-cap"></i>
+                <h4>Intern</h4><i class="fa-solid fa-glasses"></i>
             </div>
             <div class="card-body">
                 <p class="id">ID: ${intern.id}</p>
@@ -57,7 +57,47 @@ generateIntern = intern => {
 
 
 // push array to team.html page
+generatePage = (data) => {
 
+    // array for cards
+    pageArray = [];
+
+    for (let i = 0; i < data.length; i++) {
+        const employee = data[i];
+        const role = employee.getRole();
+
+
+        // call manager function
+        if (role === 'Manager') {
+            const managerCard = generateManager(employee);
+
+            pageArray.push(managerCard);
+        }
+
+        // call engineer function
+        if (role === 'Engineer') {
+            const engineerCard = generateEngineer(employee);
+
+            pageArray.push(engineerCard);
+        }
+
+        // call intern function
+        if (role === 'Intern') {
+            const internCard = generateIntern(employee);
+
+            pageArray.push(internCard);
+        }
+
+    }
+
+    // joining strings
+    const employeeCards = pageArray.join('')
+
+    // return team page
+    const generateTeam = generateTeamPage(employeeCards);
+    return generateTeam;
+
+}
 
 // generate html page
 const generateTeamPage = function (employeeCards) {
