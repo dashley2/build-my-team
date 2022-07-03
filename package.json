@@ -1,0 +1,25 @@
+{
+  "name": "build-my-team",
+  "version": "1.0.0",
+  "description": "command-line application that accepts user input to generate team roster",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dashley2/build-my-team.git"
+  },
+  "author": "Ashley Darr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dashley2/build-my-team/issues"
+  },
+  "homepage": "https://github.com/dashley2/build-my-team#readme",
+  "devDependencies": {
+    "jest": "^28.1.2"
+  },
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
